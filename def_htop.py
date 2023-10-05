@@ -4,6 +4,7 @@ pd.set_option('display.max_rows', None)
 from datetime import timedelta
 from time import time
 
+
 def get_cpu_percent(): #возвращает сведения о загруженности ядер
 
     data = psutil.cpu_percent(interval=1, percpu=True)
@@ -12,6 +13,7 @@ def get_cpu_percent(): #возвращает сведения о загруже�
         diction[i] = data[i]
 
     return diction
+
 
 def show_cpu_percent(): #выводит сведения о загруженности ядер
 
@@ -25,7 +27,7 @@ def show_cpu_percent(): #выводит сведения о загруженно
 def get_mem_info():#возвращает сведения об используемой оперативной памяти
 
     data = psutil.virtual_memory()
-    name = ['Total', 'Available', 'Percent', 'Used', 'Free']
+    name = data._fields
     diction = {}
 
     for i in range(len(name)):
@@ -33,18 +35,21 @@ def get_mem_info():#возвращает сведения об использу�
 
     return diction
 
+
 def show_mem_info():#выводит сведения об используемой оперативной памяти
 
     data = get_mem_info()
 
-    counter = int(data['Percent']) // 5
-    data_used = round(data['Used'] / 1024**3, 2)
-    data_total = round(data['Total'] / 1024**3, 2)
+    counter = int(data['percent']) // 5
+    data_used = round(data['used'] / 1024**3, 2)
+    data_total = round(data['total'] / 1024**3, 2)
     print('\nMem[' + '|' * counter + '.' * (20 - counter), data_used, '/', data_total, 'Gb]')
+
 
 def show_load_average():#выводит сведения о средней загруженности
 
     print('Load average:', *[x / psutil.cpu_count() * 100 for x in psutil.getloadavg()])
+
 
 def show_swap_memory():
 
@@ -81,6 +86,7 @@ def show_pids():
 
     print('Tasks:', len(psutil.pids()), '\n')
     print(new_data)
+
 
 def htop():
     return show_cpu_percent(), show_mem_info(), show_swap_memory(), show_load_average(), show_up_time(), show_pids()
