@@ -40,10 +40,10 @@ def show_mem_info():#выводит сведения об используемо
 
     data = get_mem_info()
 
-    counter = int(data['percent']) // 5
-    data_used = round(data['used'] / 1024**3, 2)
-    data_total = round(data['total'] / 1024**3, 2)
-    print('\nMem[' + '|' * counter + '.' * (20 - counter), data_used, '/', data_total, 'Gb]')
+    counters = int(data['percent']) // 5
+    mem_used = round(data['used'] / 1024**3, 2)
+    mem_total = round(data['total'] / 1024**3, 2)
+    print('\nMem[' + '|' * counters + '.' * (20 - counters), mem_used, '/', mem_total, 'Gb]')
 
 
 def show_load_average():#выводит сведения о средней загруженности
